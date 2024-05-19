@@ -21,17 +21,24 @@ df = pandas.DataFrame(my_catalog)
 color_list = df[0].values.tolist()
 
 # Let's put a pick list here so they can pick the color
-option = streamlit.selectbox('Pick a sweatsuit color or style:', ('a', 'b'))
+option = streamlit.selectbox('Pick a sweatsuit color or style:', color_list)
 
 # We'll build the image caption now, since we can
 product_caption = 'Our warm, comfortable, ' + option + ' sweatsuit!'
-streamlit.write(option)
-streamlit.stop()
-# use the option selected to go back and get all the info from the database
-my_cur.execute("select direct_url, price, size_list, upsell_product_desc from catalog_for_website where color_or_style = '" + option + "';")
 
+# Use the option selected to go back and get all the info from the database
+query = """
+SELECT direct_url, price, size_list, upsell_product_desc 
+FROM catalog_for_website 
+WHERE color_or_style = '{}';
+""".format(option)
+my_cur.execute(query)
 df2 = my_cur.fetchone()
-streamlit.image(df2[0],width=400,caption= product_caption)
-streamlit.write('Price: ', df2[1])
-streamlit.write('Sizes Available: ',df2[2])
-streamlit.write(df2[3])
+
+if df2:
+    st.image(df2[0], width=400, caption=product_caption)
+    st.write('Price: ', df2[1])
+    st.write('Sizes Available: ', df2[2])
+    st.write(df2[3])
+else:
+    st.write("No details found for the selected option.")
