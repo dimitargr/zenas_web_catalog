@@ -21,7 +21,14 @@ df = pd.DataFrame(my_catalog, columns=['color_or_style'])
 color_list = df['color_or_style'].tolist()
 
 # Let's put a pick list here so they can pick the color
-option = st.selectbox('Pick a sweatsuit color or style:', color_list)
+if 'choice_key' in st.session_state:
+        if st.session_state['choice_key'] not in option_list: st.session_state['choice_key']='default'
+        c_ind = plot_list.index(st.session_state['choice_key'])
+else: c_ind = 0
+
+option = st.session_state['choice_key'] = st.selectbox('Choice', option_list, index=c_ind)
+
+#option = st.selectbox('Pick a sweatsuit color or style:', color_list)
 
 # We'll build the image caption now, since we can
 product_caption = 'Our warm, comfortable, ' + option + ' sweatsuit!'
