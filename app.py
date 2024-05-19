@@ -32,6 +32,7 @@ SELECT direct_url, price, size_list, upsell_product_desc
 FROM catalog_for_website 
 WHERE color_or_style = '{}';
 """.format(option)
+
 my_cur.execute(query)
 df2 = my_cur.fetchone()
 
