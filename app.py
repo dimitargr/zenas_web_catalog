@@ -25,7 +25,7 @@ print(color_list)
 option = streamlit.selectbox('Pick a sweatsuit color or style:', list(color_list))
 
 # We'll build the image caption now, since we can
-product_caption = 'Our warm, comfortable, ' + option + ' sweatsuit!'
+#product_caption = 'Our warm, comfortable, ' + option + ' sweatsuit!'
 streamlit.write(option)
 streamlit.stop()
 # use the option selected to go back and get all the info from the database
