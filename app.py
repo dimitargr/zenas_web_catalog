@@ -13,12 +13,12 @@ my_cur.execute("select color_or_style from catalog_for_website")
 my_catalog = my_cur.fetchall()
 
 # put the dafta into a dataframe
-df = pandas.DataFrame(my_catalog)
+df = pd.DataFrame(my_catalog, columns=['color_or_style'])
 
 # temp write the dataframe to the page so I Can see what I am working with
 # st.write(df)
 # put the first column into a list
-color_list = df[0].values.tolist()
+color_list = df['color_or_style'].tolist()
 
 # Let's put a pick list here so they can pick the color
 option = st.selectbox('Pick a sweatsuit color or style:', color_list)
